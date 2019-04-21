@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title class="title">Users list</title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <nav class="navbar" class="navbar navbar-light bg-light">
+            <a class="navbar-brand"><strong>Home</strong></a>
+            <form class="form-inline">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <button type="submit">Search</button>
+            </form>
+          </nav>
+    <style>
+        .navbar {
+            background-color:rgb(208, 120, 128);
+        }
+        .body{
+            background:url(A.jpg) no-repeat center center fixed ;
+            background-size:cover;
+        }
+        .title{
+            border:  100% solid black;
+        }
+        .btn{
+            float:right;
+        }
+        .email{
+            float: right;
+        }
+        .btn {
+            background-color:rgb(208, 120, 128);
+            
+        }
+        .user .card {
+            margin: 10px;
+        }
+        .user img{
+            size: 100%;
+        }
+        .user img {
+            opacity: 0.7
+            border;
+        }
+        .user:hover img {
+            opacity: 1;
+            transform: scale(1.04);
+            transition: 200ms
+        }
+        .img{
+            border:1px solid black;
+            width: 50px;
+        }
+        
+        .h{
+            
+            
+            font-style:unset;
+            text-align: center;
+            
+        }
+        
+    </style>
+</head>
+
+<body class="body">
+   
+    <div class="container">
+        <header>
+            <nav class="menu">
+         <div class=header><h1 class="h">Users List</h1> <br><br>
+        <button title="click here" style="width:70px;" class="btn btn-block text-center  m-auto" onclick="toggle(this)"><i>Table</i></button>
+         </div>
+             </nav>
+        </header>
+        <div class="users">
+            <div class="row">
+                
+            </div>
+        </div>
+    </div>
+
+    <div id="gabaris" style="display:none">
+        <div class="col-md-4 user">
+            <div class="card" style="width: 16rem;">
+                <img src="" class="card-img-top center"style="width:100%;" alt="">
+                <div class="card-body">
+                  <h5 class="card-title name text-center"></h5>
+                  <p class="card-text email center"></p>
+                  <button type="button" class="btn btn-block"  data-toggle="modal" data-target="#exampleModal"><strong>modifier</strong></button>
+
+                </div>
+              </div>
+        </div>
+    </div>
+    <div id="tbl" style="display:none;">
+        <table class="col-md-12" style="opacity:1">
+            <tr>
+                <td><img class="img" src=""></img></td>
+                <td><p class="name center"></p></td>
+                <td><p class="email center"></p></td>
+                <td>
+                    <button type="button" class="btn "  data-toggle="modal" data-target="#exampleModal">
+                              <div> <strong> modifier</strong> </div>
+                    </button></td>
+            </tr>
+        </table>
+    </div>
+   
+   
+   
+   
+    <div class="modal" tabindex="-1" role="dialog" id="exampleModal" id="mod">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content" style="padding: 30px">
+
+                    <form method="POST" onsubmit="modifier()">
+                        
+								<div class="form-group">
+                             <img src="" style="height:50px;width:50px" id="image" alt="">
+                              
+                            </div>
+                                    <div class="form-group">
+                              <label for="nom">Name</label>
+                              <input type="text" class="form-control" id="nom" aria-describedby="emailHelp" placeholder="Enter Name..">
+                              
+                            </div>
+							           <div class="form-group">
+                              <label for="prenom">last name</label>
+                              <input type="text" class="form-control" id="prenom" aria-describedby="emailHelp" placeholder="Enter Name..">
+                              
+                            </div>
+                            <div class="form-group">
+                              <label for="email">Email</label>
+                              <input type="email" class="form-control" id="email" placeholder="Enter Email">
+                            </div>
+                            <div class="form-group form-check">
+                              <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                              <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                            </div>
+                            <button type="submit" id="edit"class="btn btn-block" >Save</button>
+                          </form>
+
+
+              </div>
+            </div>
+          </div>
+          
+
+    <script src="node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="users.js"></script>
+   
+   
+   
+   <script>   
+  
+		   if ( localStorage.getItem("users") == null){
+			 localStorage.setItem("users", JSON.stringify(users));
+		   }
+
+       
+        var users = JSON.parse(localStorage.getItem("users"));
+
+        var trans = document.querySelector('.users .row')
+        
+        
+        function showGrid(){
+            var gabari = document.querySelector('#gabaris .user')
+            users.forEach(function(user, index){
+                var copy = gabari.cloneNode(true)
+                copy.querySelector('.name').innerHTML = '<b>' + user.name.last + '</b> ' + user.name.first
+                copy.querySelector('.email').innerText = user.email 
+				copy.querySelector('img').setAttribute('src', user.picture.large)
+                copy.querySelector('button').setAttribute('onclick', 'GetData('+index+')')
+                trans.appendChild(copy);
+            })
+        }
+		
+	
+	
+		showTable() ;
+    
+        function showTable(){
+            var gabari = document.querySelector('#tbl table')
+		
+            users.forEach(function(user, index){
+                var copy = gabari.cloneNode(true)
+                copy.querySelector('.name').innerHTML = '<b>' + user.name.last + '</b> ' + user.name.first
+                copy.querySelector('.email').innerText = user.email
+                copy.querySelector('img').setAttribute('src', user.picture.large)
+             
+                copy.querySelector('button').setAttribute('onclick', 'GetData('+index+')')
+                trans.appendChild(copy);
+            })
+        }
+
+        function toggle(t){
+            if(t.innerText == "Grid"){
+                t.innerText = "Table" ;
+                trans.innerHTML = null ; 
+                showTable() ;            
+            }else{
+                t.innerText = "Grid" ;
+                trans.innerHTML = null ; 
+                showGrid() ;  
+            }
+        }
+	
+        
+		    function modifier(){
+			
+			var nom =document.getElementById("nom").value;
+			var prenom =document.getElementById("prenom").value;
+			var mail =document.getElementById("email").value;
+			var gabari = document.querySelector('#tbl table')
+	        var j =localStorage.getItem("j");
+			var person = JSON.parse(localStorage.getItem("users"));
+
+
+			person[j].name.last= nom;
+			person[j].name.first= prenom;
+			person[j].email= mail;
+
+			localStorage.setItem("users", JSON.stringify(person));
+
+		 }
+
+         
+         function GetData(i) {
+ 
+           document.getElementById("nom").value=users[i].name.last;
+           document.getElementById("prenom").value=users[i].name.first;
+           document.getElementById("email").value=users[i].email;
+           document.getElementById("image").src=users[i].picture.large;
+           document.getElementById("gabaris").style.display="none"
+		
+		   localStorage.setItem("j", i);   
+     
+         }
+
+
+
+
+
+
+
+    </script>
+
+</body>
+</html>
